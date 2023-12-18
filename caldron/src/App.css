@@ -1,0 +1,10 @@
+.bg-custom {
+  background-color: #005a96;
+}
+.header {
+  background-color: #001B79;
+}
+.ReactModalPortal {
+  position: absolute;
+  z-index: 200;
+}
