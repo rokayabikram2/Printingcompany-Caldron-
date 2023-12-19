@@ -19,7 +19,6 @@ const ChatButton = () => {
 
         }
     }
-    console.log(chat);
     useEffect(() => {
         chatData();
     

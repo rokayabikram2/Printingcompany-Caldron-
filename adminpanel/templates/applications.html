@@ -36,25 +36,20 @@
                                                     <p>{{ app.mobile }}</p>
                                                 </div>
                                             </div>
-                                            <div class="flex md:flex-row flex-col justify-between items-center gap-4">
-                                                <div class="flex flex-col items-start w-full py-3">
-                                                    <label class="mb-1">Permanent Address</label>
-                                                    <p>{{ app.permanentAddress }}</p>
-                                                </div>
-                                                <div class="flex flex-col items-start w-full py-3">
-                                                    <label class="mb-1">Current Address</label>
-                                                    <p>{{ app.currentAddress }}</p>
-                                                </div>
-                                            </div>
+                                    
                                             <div class="flex md:flex-row flex-col justify-between items-center gap-4">
                                                 <div class="flex flex-col items-start w-full py-3">
                                                     <label class="mb-1">Email</label>
                                                     <p>{{ app.email }}</p>
                                                 </div>
+                                               
+                                            </div>
+                                            <div class="flex md:flex-row flex-col justify-between items-center gap-4">
                                                 <div class="flex flex-col items-start w-full py-3">
-                                                    <label class="mb-1">Country</label>
-                                                    <p>{{ app.country }}</p>
+                                                    <label class="mb-1">Product</label>
+                                                    <p>{{ app.product }}</p>
                                                 </div>
+                                               
                                             </div>
                                             <div class="flex md:flex-row flex-col justify-between items-center gap-4">
                                                 <div class="flex flex-col items-start w-full py-3">
@@ -62,48 +57,8 @@
                                                     <p>{{ app.message }}</p>
                                                 </div>
                                             </div>
-                                            <div class="flex md:flex-row flex-col justify-between items-center gap-4">
-                                                <div class="flex flex-col items-start w-full py-3">
-                                                    <label class="mb-1">CV</label>
-                                                    <!-- Display the CV file or link here -->
-                                                    {% if app.cv %}
-                                                    <a href="{{ app.cv.url }}" class="view">View CV</a>
-                                                    {% else %}
-                                                    No CV available
-                                                    {% endif %}
-                                                </div>
-                                                <div class="flex flex-col items-start w-full py-3">
-                                                    <label class="mb-1">Photo</label>
-                                                    <!-- Display the photo file or link here -->
-                                                    {% if app.photo %}
-                                                    <a href="{{ app.photo.url }}"  class="view">View photo</a>
-                                                    {% comment %} <img src="{{ app.photo.url }}" alt="Photo" width="100"> {% endcomment %}
-                                                    {% else %}
-                                                    No photo available
-                                                    {% endif %}
-                                                </div>
-                                                <div class="flex flex-col items-start w-full py-3">
-                                                    <label class="mb-1">Passport</label>
-                                                    <!-- Display the passport file or link here -->
-                                                    {% if app.passport %}
-                                                    <a href="{{ app.passport.url }}" class="view" >View Passport</a>
-                                                    {% else %}
-                                                    No passport available
-                                                    {% endif %}
-                                                </div>
-                                                <div class="flex flex-col items-start w-full py-3">
-                                                    <label class="mb-1">Certificate</label>
-                                                    <!-- Display the certificate file or link here -->
-                                                    {% if app.certificate %}
-                                                    <a   href="{{ app.certificate.url }}" class="view" >View Certificate</a>
-                                                    {% else %}
-                                                    No certificate available
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                            <!-- Add other details similarly -->
-                                            {% comment %} {% endfor %} {% endcomment %}
-                                            <!-- Back button -->
+                                            
+                                          
                                            
                                             
                                         </div>

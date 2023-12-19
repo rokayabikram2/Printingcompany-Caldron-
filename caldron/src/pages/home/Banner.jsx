@@ -31,7 +31,6 @@ const Banner = () => {
 
         }
     }
-    // console.log(banner);
 
     useEffect(() => {
         bannerData();

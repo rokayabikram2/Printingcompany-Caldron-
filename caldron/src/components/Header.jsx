@@ -52,7 +52,6 @@ const Header = () => {
             console.error("Error fetching data:", error);
         }
     }
-    // console.log(data);
 
     useEffect(() => {
         // Axios GET request to fetch data

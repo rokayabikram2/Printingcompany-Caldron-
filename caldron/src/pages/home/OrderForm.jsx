@@ -1,7 +1,31 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import ProductData from '../../data/ProductData';
+import axios from 'axios';
+import { BaseUrlContext } from '../../App';
 
 const OrderForm = () => {
+    const [order, setOrder] = useState({});
+    const baseUrl = React.useContext(BaseUrlContext);
+
+    const orderData = async () => {
+        try {
+            const response = await axios.get(
+                `${baseUrl}/navigations/`
+            );
+
+            const orderDatas = response.data.find(
+                (item) => item.status === "Publish" && item.page_type === "order Product"
+            );
+            setOrder(orderDatas);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+
+        }
+    }
+
+    useEffect(() => {
+        orderData();
+    }, []);
     const groupedData = {};
 
     ProductData.forEach((dataItem) => {
@@ -26,17 +50,40 @@ const OrderForm = () => {
     const [form, setForm] = useState(initialForm)
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setForm({ ...form, [name]: value });
+        setForm((prevData) =>({ ...prevData, [name]: value }));
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        alert('Form submitted successfully!')
-        console.log(form)
-        setForm(initialForm)
-    }
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     alert('Form submitted successfully!')
+    //     console.log(form)
+    //     setForm(initialForm)
+    // }
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+    
+        try {
+            const response = await axios.post(
+                `${baseUrl}/applies/`,  // Update with your Django API endpoint
+                form
+            );
+            
+            // Display success message
+            // setSuccessMessage("Contact form submitted successfully!");
+            alert("Contact form submitted successfully!")
+    
+            
+            setForm(initialForm);
+    
+    
+        }catch (error) {
+          console.error("Error on fetching data:", error);
+      
+          
+        }
+    };
     return (
-        <section className="md:py-20 py-16 relative bg-cover bg-fixed bg-no-repeat bg-[url('/src/assets/images/img1.webp')]">
+        <section className="md:py-20 py-16 relative" style={{backgroundImage: `url(${order && order.bannerimage})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
             <div className="absolute w-full h-full inset-0 bg-black opacity-90"></div>
             <div className="container flex flex-col items-center gap-4 relative">
                 <h2 className="text-white md:text-2xl text-xl font-semibold relative after:absolute after:w-full after:h-[3px] after:content-[''] after:bg-color1 after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:rounded before:absolute before:h-[3px] before:w-[3px] before:content-[''] before:bg-white before:bottom-0 before:z-10 before:animate-slow-motion">Order Product</h2>

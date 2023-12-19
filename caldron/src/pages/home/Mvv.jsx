@@ -24,7 +24,7 @@ const Mvv = () => {
 
         }
     }
-    console.log(mission);
+    // console.log(mission);
 
     useEffect(() => {
         missionData();

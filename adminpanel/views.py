@@ -201,6 +201,8 @@ def navigation_list(request, parent_id=None):
         published_date= request.POST.get('published_date')
         interview_date = request.POST.get('interview_date')
         country = request.POST.get('country')
+        video = request.FILES.get('video')
+        
         
         
         if parent_id:
@@ -238,6 +240,8 @@ def navigation_list(request, parent_id=None):
             obj.brochure = brochure
         if icon_image:
             obj.icon_image = icon_image
+        if video:
+            obj.video = video
 
         obj.save()  # Save the new Navigation object to the database
 
@@ -276,6 +280,8 @@ def update(request, pk):
         published_date = request.POST.get('published_date')
         interview_date =request.POST.get('interview_date')
         country = request.POST.get('country')
+        video = request.FILES.get('video')
+        
         
 
         if parent_id:
@@ -317,6 +323,9 @@ def update(request, pk):
             
         if icon_image:
             data.icon_image = icon_image
+        
+        if video:
+            data.video=video
         
         data.save()
 

@@ -41,7 +41,6 @@ const Footer = () => {
 
     }
 }
-// console.log(footer);
 
 useEffect(() => {
     footerData();
@@ -88,7 +87,7 @@ useEffect(() => {
                 <i className="fa-solid fa-location-dot text-sm text-color2"></i>
                 <p className='group-hover:underline'>{footer.SiteAddress}</p>
                 </a>
-              <a href={`{tel:${footer.SiteContact}`}className='flex items-center gap-1 group'>
+              <a href={`{tel:${footer.SiteContact}`} className='flex items-center gap-1 group'>
                 <i className="fa-solid fa-phone text-sm text-color2"></i>
                 <p className='group-hover:underline'>{footer.SiteContact}</p>
                 </a>

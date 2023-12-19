@@ -1,7 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+import { BaseUrlContext } from '../../App';
 
 const ContactUs = () => {
+    const [contacts,setContacts] = useState([]);
+    const [global,setGlobal] = useState([])
+    const baseUrl = React.useContext(BaseUrlContext);
+
+    const contactData= async () =>{
+      try {
+          const response = await axios.get(
+              `${baseUrl}/navigations/`
+          );
+          
+          const contactsDatas = response.data.find(
+              (item) => item.status ==="Publish" && item.page_type ==="Contact us"
+  
+          );
+          setContacts(contactsDatas);
+
+          const responses = await axios.get(`${baseUrl}/globals/`);
+          responses.data && setGlobal(responses.data[0]);
+  
+      
+      }catch (error){
+          console.error("Error on fetching data:",error);
+  
+  
+      }
+  
+    };
+
+    useEffect(() => {
+        contactData();
+      
+    },[]);
+
     const initialForm = {
         name: '',
         mobile: '',
@@ -10,26 +45,51 @@ const ContactUs = () => {
         message: '',
     }
     const [form, setForm] = useState(initialForm)
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setForm({ ...form, [name]: value });
-    }
+  
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setForm((prevData) => ({
+          ...prevData,
+          [name]: value
+        }));
+      };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        alert('Form submitted successfully!')
-        console.log(form)
-        setForm(initialForm)
-    }
+  
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+    
+        try {
+            const response = await axios.post(
+                `${baseUrl}/contacts/`,  // Update with your Django API endpoint
+                form
+            );
+            
+            // Display success message
+            // setSuccessMessage("Contact form submitted successfully!");
+            alert("Contact form submitted successfully!")
+    
+            
+            // Clear the form after submission
+            setForm(initialForm);
+    
+    
+        }catch (error) {
+          console.error("Error on fetching data:", error);
+      
+          
+        }
+    };
+
     return (
         <>
-            <section className={`bg-no-repeat bg-cover md:h-[300px] h-[150px] relative bg-[url('/src/assets/images/background.webp')]`}>
+            <section className={`md:h-[300px] h-[150px] relative`} 
+            style={{backgroundImage: `url(${contacts && contacts.bannerimage})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
                 <div className="absolute w-full h-full inset-0 bg-black opacity-80"></div>
                 <div className="container relative z-10 text-white flex items-center justify-center h-full">
                     <ul className='flex items-center gap-1 md:text-lg font-medium'>
                         <li className='text-color2'><NavLink to="/">Home</NavLink></li>
                         /
-                        <li>Contact Us</li>
+                        <li>{contacts.name}</li>
                     </ul>
                 </div>
             </section>
@@ -68,27 +128,34 @@ const ContactUs = () => {
                             </form>
                         </div>
                         <div className='xl:w-1/2 w-full flex flex-col sm:items-center items-start gap-2'>
-                            <h3 className='md:text-xl text-lg font-semibold'>CALDRON GRAPHICS NEPAL Pvt. Ltd.</h3>
+                            <h3 className='md:text-xl text-lg font-semibold'>{global.SiteName}</h3>
                             <div className='flex sm:flex-row flex-col justify-center w-full gap-6'>
                                 <div className='flex items-center gap-2'>
                                     <i className="fa-solid fa-location-dot text-sm p-2 text-white bg-gray-900"></i>
                                     <span>
                                         <p className='md:text-lg text-base font-medium'>Location</p>
-                                        <p className='text-gray-100 text-sm'>Bansbari, kathmandy</p>
+                                        <a href='https://maps.app.goo.gl/P4HT3BgZRz9Um5R6A' target='_blank' rel='noreferrer'>
+                                        <p className='text-gray-100 text-sm'>{global.SiteAddress}</p>
+                                        </a>
                                     </span>
                                 </div>
                                 <div className='flex items-center gap-2'>
                                     <i className="fa-solid fa-phone text-sm p-2 text-white bg-gray-900"></i>
                                     <span>
                                         <p className='md:text-lg text-base font-medium'>Contact</p>
-                                        <p className='text-gray-100 text-sm'>+977-1-4373508</p>
+                                        <a href={`{tel:${global.SiteContact}`}>
+                                        <p className='text-gray-100 text-sm'>{global.SiteContact}</p>
+                                        </a>
+
                                     </span>
                                 </div>
                                 <div className='flex items-center gap-2'>
                                     <i className="fa-solid fa-envelope text-sm p-2 text-white bg-gray-900"></i>
                                     <span>
                                         <p className='md:text-lg text-base font-medium'>Email</p>
-                                        <p className='text-gray-100 text-sm'>info@caldrongraphics.com.np</p>
+                                        <a href={`mailto:${global.SiteEmail}`}>
+                                        <p className='text-gray-100 text-sm'>{global.SiteEmail}</p>
+                                        </a>
                                     </span>
                                 </div>
                             </div>

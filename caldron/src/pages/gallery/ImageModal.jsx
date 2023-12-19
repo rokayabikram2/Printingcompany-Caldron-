@@ -60,7 +60,7 @@ const ImageModal = (props) => {
                 </span>
                 <div className='flex justify-center items-center pt-3 h-full'>
                     <img
-                        src={currentImage.imageUrl}
+                        src={currentImage.bannerimage}
                         alt="Full Image"
                         className="h-full lg:w-[50%] w-full object-cover shadow-[0_0_5px_2px_rgba(0,0,0,0.1)]"
                     />

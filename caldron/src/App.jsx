@@ -45,7 +45,7 @@ function App() {
           <Route exact path='/AboutUs' element={<AboutUs />} />
           <Route exact path='/AboutUs/:title' element={<WwaDetail />} />
           <Route exact path='/ImageGallery' element={<ImageGallery />} />
-          <Route exact path='/ImageGallery/:album' element={<Images />} />
+          <Route exact path='/ImageGallery/:title' element={<Images />} />
           <Route exact path='/VideoGallery' element={<VideoGallery />} />
           <Route exact path='/ContactUs' element={<ContactUs />} />
           <Route exact path='/ProductCat/:category' element={<SubCategory />} />

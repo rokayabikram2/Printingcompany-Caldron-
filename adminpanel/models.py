@@ -35,13 +35,11 @@ class ContactUS(models.Model):
 class Navigation(models.Model):
     PAGE_TYPE = (
         ('Home','Home'), ('Home/Slider','Home/Slider'),
-        ('Home/Aboutus','Home/Aboutus'),('legaldocument','legaldocument'),('legaldocument/slider','legaldocument/slider'),('Organization chart','Organization chart'),('Our Team','Our Team'),('Our Team/Slider','Our Team/Slider'),
-        ('Current Demand/slider','Current Demand/slider'),('Newspaper Vacancy','Newspaper Vacancy'),('NewspaperVacancy/Slider','NewspaperVacancy/Slider'),('Apply/Slider','Apply/Slider'),
-        ('M&V/Slider','M&V/Slider'),('Mission & Vision','Mission & Vision'),('Testimonial','Testimonial'),('Clients','Clients'),
-        ('AboutUs','AboutUs'),('About Nepal','About Nepal'),('About Nepal/Image','About Nepal/Image'),('Message from MD','Message from MD'),('Recruitment Process','Recruitment Process'),
-        ('Why Choose Us/right','Why Choose Us/right'),('Why Choose Us/left','Why Choose Us/left'),('WhyChooseUs/slider','WhyChooseUs/slider'),('Job Sector','Job Sector'),('Job Sector/slider','Job Sector/slider'),('Documentation','Documentation'),
-        ('Documentation/Country','Documentation/Country'),('Gallery','Gallery'),('Gallery/slider','Gallery/slider'),('Gallery/Company profile','Gallery/Company profile'),('Gallery/Events','Gallery/Events'),
-        ('Contact us','contact us')
+        ('Home/Aboutus','Home/Aboutus'),('Apply/Slider','Apply/Slider'),('Home/CompanyData','Home/CompanyData'),('CompanyData/Slider','CompanyData/Slider'),('CompanyData Details','CompanyData Details'),
+        ('M&V/Slider','M&V/Slider'),('Mission & Vision','Mission & Vision'),('Testimonial','Testimonial'),('Testimonial/Background','Testimonial/Background'),('Clients','Clients'),
+        ('AboutUs','AboutUs'),('About/WhoWeAre','About/WhoWeAre'),('WhoWeAre/Slider','WhoWeAre/Slider'),('WhyChoose Us/Qualities','WhyChoose Us/Qualities'),('WhyChooseUs','WhyChooseUs'),('WhyChooseUs/Slider','WhyChooseUs/Slider'),
+        ('Image Gallery','Image Gallery'),('Image Gallery/slider','Image Gallery/slider'),('order Product','order Product'),
+        ('Video Gallery','Video Gallery'),('Video Gallery/slider','Video Gallery/slider'),('Contact us','contact us')
      
        
        
@@ -70,6 +68,7 @@ class Navigation(models.Model):
     published_date=models.CharField(max_length=50,null=True)
     interview_date = models.CharField(max_length=50,null =True)
     country = models.CharField(max_length=50,null =True)
+    video = models.FileField(upload_to="video/",null=True)
     
 
     def __str__(self):
@@ -80,15 +79,9 @@ class Navigation(models.Model):
 class Apply(models.Model):
     name = models.CharField(max_length=50)
     mobile = models.CharField(max_length=50,null=True)
-    permanentAddress = models.CharField(max_length=500,null=True)
-    currentAddress = models.CharField(max_length=50,null=True)
     email = models.CharField(max_length=50, null=True)
-    country = models.CharField(max_length=50,default="Nepal")
+    product = models.CharField(max_length=50, null=True)
     message = models.TextField(null=True)
-    cv = models.FileField(upload_to='cv_uploads/',null=True)
-    photo = models.FileField(upload_to='pp_photo',null=True)
-    passport = models.FileField(upload_to='passport',null=True)
-    certificate=models.FileField(upload_to='academic_certificate',null=True)
 
     def _str_(self):
         return self.name

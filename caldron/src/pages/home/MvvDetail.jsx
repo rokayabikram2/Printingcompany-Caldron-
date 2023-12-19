@@ -33,7 +33,7 @@ const MvvDetail = () => {
 
       }
   }
-  console.log(slide);
+//   console.log(slide);
 
   useEffect(() => {
       missionData();
@@ -57,7 +57,8 @@ const MvvDetail = () => {
             <section className='md:py-20 py-16 bg-color1 text-white'>
                 <div className="container flex md:flex-row flex-col gap-6">
                     <div className='flex flex-col items-start gap-2 md:w-2/3 w-full'>
-                        <h2 className="md:text-2xl text-xl font-semibold relative after:absolute after:w-full after:h-[3px] after:content-[''] after:bg-white after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:rounded before:absolute before:h-[3px] before:w-[3px] before:content-[''] before:bg-color1 before:bottom-0 before:z-10 before:animate-slow-motion">{mission.title}</h2>
+                        <h2 className="md:text-2xl text-xl font-semibold relative after:absolute after:w-full after:h-[3px] after:content-[''] after:bg-white after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:rounded before:absolute before:h-[3px] before:w-[3px] before:content-[''] 
+                        before:bg-color1 before:bottom-0 before:z-10 before:animate-slow-motion">{mission.title}</h2>
                         <p className='sm:text-base text-sm' dangerouslySetInnerHTML={{__html:mission.desc}}></p>
                     </div>
                     <div className='md:w-1/3 w-full'>
