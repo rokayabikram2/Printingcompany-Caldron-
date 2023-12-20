@@ -95,7 +95,8 @@ const ContactUs = () => {
             </section>
             <section className='md:py-20 py-16 bg-color1 text-white'>
                 <div className="container flex flex-col items-center gap-4">
-                    <h2 className="md:text-2xl text-xl font-semibold relative after:absolute after:w-full after:h-[3px] after:content-[''] after:bg-white after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:rounded before:absolute before:h-[3px] before:w-[3px] before:content-[''] before:bg-color1 before:bottom-0 before:z-10 before:animate-slow-motion">Get In Touch</h2>
+                    <h2 className="md:text-2xl text-xl font-semibold relative after:absolute after:w-full after:h-[3px] after:content-[''] after:bg-white after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:rounded before:absolute before:h-[3px] before:w-[3px] before:content-[''] 
+                    before:bg-color1 before:bottom-0 before:z-10 before:animate-slow-motion">Get In Touch</h2>
                     <div className="flex xl:flex-row flex-col xl:gap-6 gap-8 w-full items-center">
                         <div className='xl:w-1/2 lg:w-2/3 w-full flex flex-col bg-white text-black items-start gap-3 p-4 rounded-lg shadow-[0_0_5px_2px_rgba(0,0,0,0.1)]'>
                             <h3 className='md:text-xl text-lg font-semibold'>Send feedback</h3>

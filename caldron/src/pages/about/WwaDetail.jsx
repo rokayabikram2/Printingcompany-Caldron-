@@ -55,7 +55,8 @@ const WwaDetail = () => {
                         <img className='w-full sm:h-[300px] h-[280px] object-cover' src={whoweAre.bannerimage} alt={title} />
                     </div>
                     <div className='md:w-2/3 w-full flex flex-col items-start gap-2'>
-                        <h2 className="md:text-2xl text-xl font-semibold relative after:absolute after:w-full after:h-[3px] after:content-[''] after:bg-white after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:rounded before:absolute before:h-[3px] before:w-[3px] before:content-[''] before:bg-color1 before:bottom-0 before:z-10 before:animate-slow-motion">{title}</h2>
+                        <h2 className="md:text-2xl text-xl font-semibold relative after:absolute after:w-full after:h-[3px] after:content-[''] after:bg-white after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:rounded before:absolute before:h-[3px] 
+                        before:w-[3px] before:content-[''] before:bg-color1 before:bottom-0 before:z-10 before:animate-slow-motion">{title}</h2>
                         <p className='sm:text-base text-sm' dangerouslySetInnerHTML={{__html:whoweAre.desc}}></p>
                     </div>
                 </div>

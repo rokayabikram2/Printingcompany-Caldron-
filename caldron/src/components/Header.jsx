@@ -165,10 +165,23 @@ const Header = () => {
                             className={`${activeBlock === 0 ? 'after:w-full after:left-0' : 'after:w-0 after:left-1/2'} relative lg:w-auto w-full lg:after:absolute after:content-[''] after:bottom-0 after:h-[2px] after:bg-color2 after:transition-all after:duration-200 after:ease-linear hover:after:w-full hover:after:left-0`}>
                             <NavLink onClick={() => handleNav(false)} to="/" className="inline-block w-full">Home</NavLink>
                         </li>
-                        <li onClick={() => handleButtonClick(1)}
-                            className={`${activeBlock === 1 ? 'after:w-full after:left-0' : 'after:w-0 after:left-1/2'} relative lg:w-auto w-full lg:after:absolute after:content-[''] after:bottom-0 after:h-[2px] after:bg-color2 after:transition-all after:duration-200 after:ease-linear hover:after:w-full hover:after:left-0`}>
-                            <NavLink onClick={() => handleNav(false)} to="/AboutUs" className="inline-block w-full">About</NavLink>
-                        </li>
+                        {navigation.map((nav) =>(
+                            <React.Fragment key={nav.id}>
+                                {nav.id !==1 && (
+                                   <React.Fragment>
+                                    {nav.id ===46 &&(
+                                        <li onClick={() => handleButtonClick(1)}
+                                            className={`${activeBlock === 1 ? 'after:w-full after:left-0' : 'after:w-0 after:left-1/2'} relative lg:w-auto w-full lg:after:absolute after:content-[''] after:bottom-0 after:h-[2px] after:bg-color2 after:transition-all after:duration-200 after:ease-linear hover:after:w-full hover:after:left-0`}>
+                                            <NavLink onClick={() => handleNav(false)} to="/AboutUs" className="inline-block w-full">{nav.name}</NavLink>
+                                        </li>
+                                        
+                                    )}
+
+                                   </React.Fragment> 
+                                )}
+                            </React.Fragment>
+                        ))}
+                        
                         <li onClick={() => handleButtonClick(2)}
                             onMouseEnter={() => { if (window.innerWidth > 1024) { handleCategoryHover('Products', true) } }}
                             onMouseLeave={() => { if (window.innerWidth > 1024) { handleCategoryHover('Products', false) } }}
@@ -230,23 +243,46 @@ const Header = () => {
                                 </div>
                             </div>
                         </li>
-                        <li onClick={() => handleButtonClick(3)}
-                            onMouseEnter={() => { if (window.innerWidth > 1024) { setGalleryMenu(true) } }}
-                            onMouseLeave={() => { if (window.innerWidth > 1024) { setGalleryMenu(false) } }}
-                            className={`${activeBlock === 3 ? 'after:w-full after:left-0' : 'after:w-0 after:left-1/2'} lg:py-3 relative lg:w-auto w-full lg:after:absolute after:content-[''] after:bottom-[12px] after:h-[2px] after:bg-color2 after:transition-all after:duration-200 after:ease-linear hover:after:w-full hover:after:left-0`} >
-                            <button onClick={() => { setGalleryMenu(!galleryMenu), setCategoryMenus({}) }} className="w-full h-full flex justify-between items-center relative">Gallery<i className={`fa-solid fa-chevron-down before:lg:hidden ${galleryMenu ? 'rotate-180' : ''} transition-all duration-200 ease-linear`}></i></button>
-                            {galleryMenu &&
-                                <div className={`lg:bg-white lg:text-black text-gray-300 ${galleryMenu ? 'block' : 'hidden'} lg:absolute lg:top-[48px] lg:left-[-20px] lg:border lg:mt-0 mt-2`}>
-                                    <div className="flex flex-col lg:w-[160px] w-full h-full">
-                                        <NavLink onClick={() => { setGalleryMenu(false); handleNav(false) }} className="p-2 lg:border-b md:hover:text-color1 inline-block w-full" to="/ImageGallery">Image Gallery</NavLink>
-                                        <NavLink onClick={() => { setGalleryMenu(false); handleNav(false) }} className="p-2 lg:border-b md:hover:text-color1 inline-block w-full" to="/VideoGallery">Video Gallery</NavLink>
-                                    </div>
-                                </div>
-                            }
-                        </li>
-                        <li onClick={() => handleButtonClick(4)} className={`${activeBlock === 4 ? 'after:w-full after:left-0' : 'after:w-0 after:left-1/2'} relative lg:w-auto w-full lg:after:absolute after:content-[''] after:bottom-0 after:h-[2px] after:bg-color2 after:transition-all after:duration-200 after:ease-linear hover:after:w-full hover:after:left-0`}>
-                            <NavLink onClick={() => handleNav(false)} to="/ContactUs" className="inline-block w-full">Contact Us</NavLink>
-                        </li>
+                        {navigation.map((nav) =>(
+                            <React.Fragment key={nav.id}>
+                                    {nav.id ===54 &&(
+                                          <li onClick={() => handleButtonClick(3)}
+                                          onMouseEnter={() => { if (window.innerWidth > 1024) { setGalleryMenu(true) } }}
+                                          onMouseLeave={() => { if (window.innerWidth > 1024) { setGalleryMenu(false) } }}
+                                          className={`${activeBlock === 3 ? 'after:w-full after:left-0' : 'after:w-0 after:left-1/2'} lg:py-3 relative lg:w-auto w-full lg:after:absolute after:content-[''] after:bottom-[12px] after:h-[2px] after:bg-color2 after:transition-all after:duration-200 after:ease-linear hover:after:w-full hover:after:left-0`} >
+                                          <button onClick={() => { setGalleryMenu(!galleryMenu), setCategoryMenus({}) }} className="w-full h-full flex justify-between items-center relative">{nav.name}<i className={`fa-solid fa-chevron-down before:lg:hidden ${galleryMenu ? 'rotate-180' : ''} transition-all duration-200 ease-linear`}></i></button>
+                                          {galleryMenu &&
+                                              <div className={`lg:bg-white lg:text-black text-gray-300 ${galleryMenu ? 'block' : 'hidden'} lg:absolute lg:top-[48px] lg:left-[-20px] lg:border lg:mt-0 mt-2`}>
+                                                  <div className="flex flex-col lg:w-[160px] w-full h-full">
+                                                  {navigation[navigation?.findIndex(item => item?.id === 55)] && (
+                                                      <NavLink onClick={() => { setGalleryMenu(false); handleNav(false) }} className="p-2 lg:border-b md:hover:text-color1 inline-block w-full" to="/ImageGallery">{navigation[navigation?.findIndex(item => item?.id === 55)]?.name}</NavLink>
+
+
+                                                  )}
+                                                  {navigation[navigation?.findIndex(item => item?.id === 65)] && (
+                                                      <NavLink onClick={() => { setGalleryMenu(false); handleNav(false) }} className="p-2 lg:border-b md:hover:text-color1 inline-block w-full" to="/VideoGallery">{navigation[navigation?.findIndex(item => item?.id === 65)]?.name}</NavLink>
+
+                                                  )}
+
+
+                                                  </div>
+                                              </div>
+                                          }
+                                      </li>
+                                    )}
+
+
+                            </React.Fragment>
+                        ))}
+
+                      
+                        {navigation[navigation?.findIndex(item => item?.id === 45)] && (
+                            <li onClick={() => handleButtonClick(4)} className={`${activeBlock === 4 ? 'after:w-full after:left-0' : 'after:w-0 after:left-1/2'} relative lg:w-auto w-full lg:after:absolute after:content-[''] after:bottom-0 after:h-[2px] after:bg-color2 after:transition-all after:duration-200 after:ease-linear hover:after:w-full hover:after:left-0`}>
+                                <NavLink onClick={() => handleNav(false)} to="/ContactUs" className="inline-block w-full">{navigation[navigation?.findIndex(item => item?.id === 45)]?.name}</NavLink>
+                            </li>
+
+                        )}
+
                     </ul>
                 </nav>
             </div>

@@ -45,7 +45,7 @@ const Client = () => {
                         spaceBetween={50}
                         loop={true}
                         autoplay={{ delay: 3000 }}
-                        centeredSlides={true}
+                        // centeredSlides={true}
                         slidesPerView={3}
                         style={{
                             '--swiper-pagination-bullet-size': '10px',

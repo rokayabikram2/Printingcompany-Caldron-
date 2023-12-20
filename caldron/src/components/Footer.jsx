@@ -5,9 +5,9 @@ import { BaseUrlContext } from '../App';
 
 const Footer = () => {
   const [footer, setFooter] = useState([]);
-  // const [parentId, setParentId] = useState(null);
+  const [parentId, setParentId] = useState(null);
 
-  // const [navigation, setNavigation] = useState([]);
+  const [navigation, setNavigation] = useState([]);
 
   const baseUrl = React.useContext(BaseUrlContext);
 
@@ -19,22 +19,22 @@ const Footer = () => {
         response.data && setFooter(response.data[0]);
 
         // Fetch navigation data based on parentId and page_type
-        // const navigationResponse = await axios.get(
-        //     `${baseUrl}/navigations/`,
-        //     {
-        //         params: {
-        //             parent_id: parentId,      // Set the parentId as a parameter
-        //             page_type: "Group"        // Filter by page_type
-        //         }
-        //     }
-        // );
-        // if (navigationResponse.data) {
-        //     const navigationData = navigationResponse.data.filter(
-        //         (item) => item.status === "Publish"
-        //     );
+        const navigationResponse = await axios.get(
+            `${baseUrl}/navigations/`,
+            {
+                params: {
+                    parent_id: parentId,      // Set the parentId as a parameter
+                    page_type: "Group"        // Filter by page_type
+                }
+            }
+        );
+        if (navigationResponse.data) {
+            const navigationData = navigationResponse.data.filter(
+                (item) => item.status === "Publish"
+            );
 
-        //     setNavigation(navigationData);
-        // }
+            setNavigation(navigationData);
+        }
 
     } catch (error) {
         console.error("Error fetching data:", error);
@@ -45,7 +45,7 @@ const Footer = () => {
 useEffect(() => {
     footerData();
 
-}, []);
+}, [parentId]);
 
 
   return (
@@ -75,9 +75,23 @@ useEffect(() => {
           <div className='flex flex-col items-start gap-2'>
             <h3 className="md:text-xl text-lg font-semibold relative after:absolute after:w-full after:h-[3px] after:content-[''] after:bg-color1 after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:rounded before:absolute before:h-[3px] before:w-[3px] before:content-[''] before:bg-white before:bottom-0 before:z-10 before:animate-slow-motion">Quick Links</h3>
             <ul className='lg:text-base text-sm'>
-              <li><NavLink to="/AboutUs" className="flex items-center gap-1 hover:gap-2 transition-all duration-200 ease-linear"><i className="fa-solid fa-arrow-right text-sm text-color2"></i>About</NavLink></li>
-              <li><NavLink to="/ImageGallery" className="flex items-center gap-1 hover:gap-2 transition-all duration-200 ease-linear"><i className="fa-solid fa-arrow-right text-sm text-color2"></i>Gallery</NavLink></li>
-              <li><NavLink to="/ContactUs" className="flex items-center gap-1 hover:gap-2 transition-all duration-200 ease-linear"><i className="fa-solid fa-arrow-right text-sm text-color2"></i>Contact</NavLink></li>
+              {navigation[navigation?.findIndex(item => item?.id === 46)] && (
+              <li><NavLink to="/AboutUs" className="flex items-center gap-1 hover:gap-2 transition-all duration-200 ease-linear"><i className="fa-solid fa-arrow-right text-sm text-color2"></i>{navigation[navigation?.findIndex(item => item?.id === 46)]?.name}</NavLink></li>
+
+
+              )}
+              {navigation[navigation?.findIndex(item => item?.id === 54)] &&(
+              <li><NavLink to="/ImageGallery" className="flex items-center gap-1 hover:gap-2 transition-all duration-200 ease-linear"><i className="fa-solid fa-arrow-right text-sm text-color2"></i>{navigation[navigation?.findIndex(item => item?.id === 54)]?.name}</NavLink></li>
+
+
+              )}
+              {navigation[navigation?.findIndex(item => item?.id === 45)] &&(
+              <li><NavLink to="/ContactUs" className="flex items-center gap-1 hover:gap-2 transition-all duration-200 ease-linear"><i className="fa-solid fa-arrow-right text-sm text-color2"></i>{navigation[navigation?.findIndex(item => item?.id === 45)]?.name}</NavLink></li>
+
+
+              )}
+
+
             </ul>
           </div>
           <div className='flex flex-col items-start gap-2'>
