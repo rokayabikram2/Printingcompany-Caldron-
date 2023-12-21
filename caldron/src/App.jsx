@@ -50,7 +50,7 @@ function App() {
           <Route exact path='/ContactUs' element={<ContactUs />} />
           <Route exact path='/ProductCat/:category' element={<SubCategory />} />
           <Route exact path='/ProductCat/:category/:subCategory' element={<Products />} />
-          <Route exact path='/ProductCat/:category/:subCategory/:product' element={<ProductDetail />} />
+          <Route exact path='/ProductCat/:category/:subCategory/:encodedProductPath' element={<ProductDetail />} />
           <Route exact path='/Mvv/:title' element={<MvvDetail />} />
         </Routes>
         <ScrollToTop />

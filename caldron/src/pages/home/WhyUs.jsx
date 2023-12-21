@@ -44,7 +44,8 @@ const WhyUs = () => {
     <section className='md:py-20 py-16 bg-color1 text-white'>
       <div className="container flex lg:flex-row flex-col lg:gap-4 gap-8">
         <div className='flex flex-col lg:items-start items-center gap-4 lg:w-2/3 w-full'>
-          <h2 className="md:text-2xl text-xl font-semibold relative after:absolute after:w-full after:h-[3px] after:content-[''] after:bg-white after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:rounded before:absolute before:h-[3px] before:w-[3px] before:content-[''] before:bg-color1 before:bottom-0 before:z-10 before:animate-slow-motion">{us.name}</h2>
+          <h2 className="md:text-2xl text-xl font-semibold relative after:absolute after:w-full after:h-[3px] after:content-[''] after:bg-white after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:rounded before:absolute before:h-[3px] before:w-[3px] before:content-['']
+           before:bg-color1 before:bottom-0 before:z-10 before:animate-slow-motion">{us.name}</h2>
           <div className='sm:text-base text-sm sm:text-left text-center'>
             <p dangerouslySetInnerHTML={{__html:us.desc}}></p>
           </div>

@@ -228,6 +228,18 @@
                                                                      {% if data.page_type == "Clients" %}selected="selected" {% endif %}>
                                                                      Clients
                                                                     </option>
+                                                                    <option value="Product"
+                                                                        {% if data.page_type == "Product" %}selected="selected" {% endif %}>
+                                                                        Product
+                                                                    </option>
+                                                                    <option value="Product/slider"
+                                                                        {% if data.page_type == "Product/slider" %}selected="selected" {% endif %}>
+                                                                        Product/slider
+                                                                    </option>
+                                                                    <option value="Product Details"
+                                                                        {% if data.page_type == "Product Details" %}selected="selected" {% endif %}>
+                                                                        Product Details
+                                                                    </option>
                                                                     
                                                                     <option value="AboutUs"
                                                                         {% if data.page_type == "AboutUs" %}selected="selected"{% endif %}>
@@ -241,8 +253,7 @@
                                                                         {% if data.page_type == "WhoWeAre/Slider" %}selected="selected"{% endif %}>
                                                                         WhoWeAre/Slider
                                                                     </option>
-                                                                    
-                                                                    Video Gallery/slider
+                                                            
                                                                     <option value="Image Gallery/slider"
                                                                         {% if data.page_type == "Image Gallery/slider" %}selected="selected"{% endif %}>
                                                                         Image Gallery/slider
@@ -265,7 +276,7 @@
                                                                         Contact us
                                                                     </option>
                                                                     
-                                                                
+                                                                    Product Details
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -297,7 +308,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                {% comment %} <div class="container">
+                                                <div class="container">
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="col-12 p-2">
@@ -309,7 +320,7 @@
                                                          
                                                         </div>
                                                     </div>
-                                                </div> {% endcomment %}
+                                                </div>
                                                 <div class="form-group">
                                                     <div class="container">
                                                         <div class="row">

@@ -1,6 +1,8 @@
-import React from 'react';
-import ProductData from '../../data/ProductData';
+import React,{useState,useEffect} from 'react';
+// import ProductData from '../../data/ProductData';
 import { NavLink } from 'react-router-dom';
+import { axios } from 'axios';
+import { BaseUrlContext } from '../../App';
 
 const ProductCat = () => {
     const groupedData = {};
@@ -16,11 +18,40 @@ const ProductCat = () => {
             groupedData[dataItem.category].products.push(dataItem);
         }
     });
+    const [productdetail, setProduct] = useState([]);
+    const baseUrl= React.useContext(BaseUrlContext);
+
+    const ProductData = async () => {
+        try {
+            const response = await axios.get(
+                `${baseUrl}/navigations/`
+            );
+            // Filter the response data by status and page_type
+           
+
+            if (response.data) {
+                const ProductDatas = response.data.filter(
+                    (item) => item.status === "Publish" && item.page_type === "Product Details"
+                );
+                setProduct(ProductDatas.filter(item => item.category === category && item.subCategory === subCategory)); // Assuming you want to slice the filtered data
+            }
+
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    useEffect(() => {
+        // Axios GET request to fetch data
+        ProductData();
+    }, []);
+
 
     return (
         <section className='md:py-20 py-16 bg-color4'>
             <div className="container flex flex-col md:items-start items-center gap-4">
-                <h2 className="md:text-2xl text-xl font-semibold relative after:absolute after:w-full after:h-[3px] after:content-[''] after:bg-color1 after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:rounded before:absolute before:h-[3px] before:w-[3px] before:content-[''] before:bg-white before:bottom-0 before:z-10 before:animate-slow-motion">Product Category</h2>
+                <h2 className="md:text-2xl text-xl font-semibold relative after:absolute after:w-full after:h-[3px] after:content-[''] after:bg-color1 after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:rounded before:absolute before:h-[3px] before:w-[3px] before:content-[''] 
+                before:bg-white before:bottom-0 before:z-10 before:animate-slow-motion">Product Category</h2>
                 <div className='grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 sm:gap-10 gap-6 w-full'>
                     {Object.values(groupedData).map((dataItem, index) => (
                         <div key={index} className='w-full flex flex-col items-center group'>

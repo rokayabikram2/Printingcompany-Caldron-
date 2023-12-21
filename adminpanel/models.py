@@ -39,7 +39,7 @@ class Navigation(models.Model):
         ('M&V/Slider','M&V/Slider'),('Mission & Vision','Mission & Vision'),('Testimonial','Testimonial'),('Testimonial/Background','Testimonial/Background'),('Clients','Clients'),
         ('AboutUs','AboutUs'),('About/WhoWeAre','About/WhoWeAre'),('WhoWeAre/Slider','WhoWeAre/Slider'),('WhyChoose Us/Qualities','WhyChoose Us/Qualities'),('WhyChooseUs','WhyChooseUs'),('WhyChooseUs/Slider','WhyChooseUs/Slider'),
         ('Image Gallery','Image Gallery'),('Image Gallery/slider','Image Gallery/slider'),('order Product','order Product'),
-        ('Video Gallery','Video Gallery'),('Video Gallery/slider','Video Gallery/slider'),('Contact us','contact us')
+        ('Video Gallery','Video Gallery'),('Video Gallery/slider','Video Gallery/slider'),('Product','Product'),('Product/slider','Product/slider'),('Product Details','Product Details'),('Contact us','contact us')
      
        
        

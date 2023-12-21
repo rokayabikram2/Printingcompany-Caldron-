@@ -46,7 +46,7 @@ const ImageGallery = () => {
         // Axios GET request to fetch data
         ImageGalleryData();
     }, []);
-    console.log(imagegall);
+    
 
     const groupedData = imagegall.reduce((result, item) => {
         const { title } = item;
