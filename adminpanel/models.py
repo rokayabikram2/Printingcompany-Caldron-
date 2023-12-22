@@ -34,14 +34,14 @@ class ContactUS(models.Model):
 
 class Navigation(models.Model):
     PAGE_TYPE = (
+        ('Group','Group'),('Normal','Normal'),
         ('Home','Home'), ('Home/Slider','Home/Slider'),
         ('Home/Aboutus','Home/Aboutus'),('Apply/Slider','Apply/Slider'),('Home/CompanyData','Home/CompanyData'),('CompanyData/Slider','CompanyData/Slider'),('CompanyData Details','CompanyData Details'),
         ('M&V/Slider','M&V/Slider'),('Mission & Vision','Mission & Vision'),('Testimonial','Testimonial'),('Testimonial/Background','Testimonial/Background'),('Clients','Clients'),
         ('AboutUs','AboutUs'),('About/WhoWeAre','About/WhoWeAre'),('WhoWeAre/Slider','WhoWeAre/Slider'),('WhyChoose Us/Qualities','WhyChoose Us/Qualities'),('WhyChooseUs','WhyChooseUs'),('WhyChooseUs/Slider','WhyChooseUs/Slider'),
         ('Image Gallery','Image Gallery'),('Image Gallery/slider','Image Gallery/slider'),('order Product','order Product'),
-        ('Video Gallery','Video Gallery'),('Video Gallery/slider','Video Gallery/slider'),('Product','Product'),('Product/slider','Product/slider'),('Product Details','Product Details'),('Contact us','contact us')
-     
-       
+        ('Video Gallery','Video Gallery'),('Video Gallery/slider','Video Gallery/slider'),('Product','Product'),('Product/slider','Product/slider'),('Contact us','contact us')
+            
        
     )
 
@@ -71,6 +71,39 @@ class Navigation(models.Model):
     video = models.FileField(upload_to="video/",null=True)
     
 
+    def __str__(self):
+        return self.name
+    
+class Product(models.Model):
+    
+    PAGE_TYPE = [
+        ('Group','Group'),('Normal','Normal'),
+        ('Product Details','Product Details')
+        
+    ]
+        
+    
+    
+    STATUS = [
+        ('Publish', 'Publish'),
+        ('Draft', 'Draft')
+    ]
+        
+    
+    
+    name = models.CharField(max_length=100,null= True)
+    category = models.CharField(max_length=100,null=True)
+    sub_category = models.CharField(max_length = 100, null=True)
+    status = models.CharField(choices=STATUS, max_length=50)
+    position = models.IntegerField(null=True)
+    page_type = models.CharField(choices=PAGE_TYPE, null=True, blank=True, max_length=50)
+    product_desc = models.CharField(max_length=200)
+    key_features= models.TextField(null=True)
+    specification = models.TextField(null=True)
+    productimage = models.ImageField(upload_to="ProductImage/",null=True)
+    Parent = models.ForeignKey('self', related_name="childs", on_delete=models.CASCADE, null=True, blank=True)
+    
+    
     def __str__(self):
         return self.name
     

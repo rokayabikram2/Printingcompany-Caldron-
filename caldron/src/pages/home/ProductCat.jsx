@@ -1,39 +1,26 @@
-import React,{useState,useEffect} from 'react';
-// import ProductData from '../../data/ProductData';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { axios } from 'axios';
+import axios from 'axios';
 import { BaseUrlContext } from '../../App';
 
 const ProductCat = () => {
-    const groupedData = {};
 
-    ProductData.forEach((dataItem) => {
-        if (!groupedData[dataItem.category]) {
-            groupedData[dataItem.category] = {
-                title: dataItem.category,
-                thumbnailImage: dataItem.imageUrl,
-                products: [dataItem],
-            };
-        } else {
-            groupedData[dataItem.category].products.push(dataItem);
-        }
-    });
-    const [productdetail, setProduct] = useState([]);
-    const baseUrl= React.useContext(BaseUrlContext);
+    const [productData, setProductData] = useState([]);
+    const baseUrl = React.useContext(BaseUrlContext);
 
-    const ProductData = async () => {
+    const FetchProduct = async () => {
         try {
             const response = await axios.get(
-                `${baseUrl}/navigations/`
+                `${baseUrl}/product/`
             );
             // Filter the response data by status and page_type
-           
+
 
             if (response.data) {
                 const ProductDatas = response.data.filter(
                     (item) => item.status === "Publish" && item.page_type === "Product Details"
                 );
-                setProduct(ProductDatas.filter(item => item.category === category && item.subCategory === subCategory)); // Assuming you want to slice the filtered data
+                setProductData(ProductDatas); // Assuming you want to slice the filtered data
             }
 
         } catch (error) {
@@ -43,9 +30,22 @@ const ProductCat = () => {
 
     useEffect(() => {
         // Axios GET request to fetch data
-        ProductData();
+        FetchProduct();
     }, []);
 
+    const groupedData = {};
+
+    productData.forEach((dataItem) => {
+        if (!groupedData[dataItem.category]) {
+            groupedData[dataItem.category] = {
+                title: dataItem.category,
+                thumbnailImage: dataItem.productimage,
+                products: [dataItem],
+            };
+        } else {
+            groupedData[dataItem.category].products.push(dataItem);
+        }
+    });
 
     return (
         <section className='md:py-20 py-16 bg-color4'>

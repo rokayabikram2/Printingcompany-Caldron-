@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .models import GlobalSettings, ContactUS, Navigation,Apply
+from .models import GlobalSettings, ContactUS, Navigation,Apply,Product
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.db.models import Q 
@@ -12,7 +12,7 @@ from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import GlobalSettings , Navigation
-from .serializers import GlobalSettingsSerializer ,NavigationSerializer
+
 
 from django.views.generic import View
 import os 
@@ -634,3 +634,147 @@ def search_results(request):
     
     return render(request, 'search.html', {'results': results, 'query': query,'glob':glob})
 
+@login_required(login_url=settings.LOGIN_URL)
+def product_navigation(request, parent_id=None):
+    glob=GlobalSettings.objects.all()
+    query = request.GET.get('q')
+    results = None
+    
+    if query:
+        results = Product.objects.filter(name__icontains=query)
+        
+    if parent_id:
+        obj = Product.objects.filter(Parent = parent_id).order_by('position')
+    else:
+        obj = Product.objects.filter(Parent = None).order_by('position')
+ 
+    return render(request, "product_navigation.html", {'obj':obj, 'parent_id':parent_id,'glob':glob,'results':results})
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def product_details (request, parent_id=None):
+    glob = GlobalSettings.objects.all()
+    obj = Navigation.objects.all()
+
+    if request.method == "POST":
+        # Retrieve form data
+        # next = request.POST.get('next','/')
+        name = request.POST.get('name')
+        status = request.POST.get('status')
+        position = request.POST.get('position')
+        page_type = request.POST.get('page_type')
+        category = request.POST.get('category')
+        sub_category = request.POST.get('sub_category')
+        product_desc = request.POST.get('product_desc')
+        productimage = request.FILES.get('productimage')
+        key_features = request.POST.get('key_features')
+        specification = request.POST.get('specification')
+        parent_id = request.POST.get('Parent')
+    
+        
+        
+        
+        if parent_id:
+            parent_product = Product.objects.get(pk=parent_id)
+        else:
+            parent_product = None
+
+        # Create a new Navigation objectj
+        obj = Product.objects.create(
+            name=name,
+            status=status,
+            position=position,
+            page_type=page_type,
+            category=category,
+            sub_category=sub_category,
+            product_desc=product_desc,
+            key_features=key_features,
+            specification=specification,
+            Parent=parent_product, 
+
+        )
+        
+
+        # Set uploaded images
+        if productimage:
+            obj.productimage = productimage
+       
+
+        obj.save()  # Save the new Navigation object to the database
+
+        obj = Product.objects.all()  # Update the navigation list with the new object
+
+        if parent_id:
+            return redirect('product_navigation', parent_id=parent_id )
+        else:
+            return redirect('product_navigation')
+      
+
+    return render(request, 'product.html',{'obj': obj, 'glob' : glob, 'parent_id':parent_id})
+
+@login_required(login_url=settings.LOGIN_URL)
+def product_update(request, pk):
+    glob = GlobalSettings.objects.all()
+    data = get_object_or_404(Product, pk=pk)
+
+    if request.method == "POST":
+        name = request.POST.get('name')
+        status = request.POST.get('status')
+        position = request.POST.get('position')
+        page_type = request.POST.get('page_type')
+        category = request.POST.get('category')
+        sub_category = request.POST.get('sub_category')
+        product_desc = request.POST.get('product_desc')
+        productimage = request.FILES.get('productimage')
+        key_features = request.POST.get('key_features')
+        specification = request.POST.get('specification')
+        parent_id = request.POST.get('Parent')
+    
+        if parent_id:
+            parent_product = Product.objects.get(pk=parent_id)
+        else:
+            parent_product = None
+
+        
+        # Update the object with the form data
+        data.name = name
+        data.status = status
+        data.position = position
+        data.page_type = page_type
+        data.category = category
+        data.sub_category = sub_category
+        data.product_desc = product_desc
+        data.key_features = key_features
+        data.specification = specification
+        data.Parent=parent_product
+       
+        
+        
+
+        if productimage:
+            data.productimage = productimage
+
+        data.save()
+
+        if parent_id:
+            return redirect('product_navigation', parent_id=parent_id )
+        else:
+            return redirect('product_navigation')
+        
+    parent_id = data.Parent.id if data.Parent else None
+
+    return render(request, 'product_update.html', {'data': data,'glob':glob,'parent_id':parent_id})
+
+@login_required(login_url=settings.LOGIN_URL)
+def delete_product(request, pk):
+    obj = get_object_or_404(Product, pk=pk)
+    parent_id = None
+
+    if request.method == "POST":
+        parent_id = obj.Parent.id if obj.Parent else None
+        obj.delete()
+
+    if parent_id:
+        return redirect('product_navigation', parent_id=parent_id)
+    else:
+        return redirect('product_navigation')

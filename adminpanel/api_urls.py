@@ -13,6 +13,7 @@ router.register(r'globals', GlobalViewSet)
 router.register(r'navigations', NavigationViewSet)
 router.register(r'contacts',ContactViewSet)
 router.register(r'applies',ApplyViewSet)
+router.register(r'product',ProductViewSet)
 
 
 
@@ -25,6 +26,8 @@ urlpatterns = [
     path('navigation/<int:pk>',Navigation.as_view(),name='navigation'),
     path('contactUs/<int:pk>',contactUS.as_view(),name='contactUs'),
     path('apply/<int:pk>',apply.as_view(),name='apply'),
+    path('product/<int:pk>',Product.as_view(),name='product'),
+    
     
     
     

@@ -6,6 +6,7 @@ from .models import *
 admin.site.register(ContactUS)
 admin.site.register(Navigation)
 admin.site.register(Apply)
+admin.site.register(Product)
 
 
 

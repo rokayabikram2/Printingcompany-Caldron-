@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import GlobalSettings,Navigation,ContactUS,Apply
+from .models import GlobalSettings,Navigation,ContactUS,Apply,Product
 from rest_framework.authtoken.views import Token
 
 
@@ -34,6 +34,11 @@ class ContactSerializer(ModelSerializer):
 class ApplySerializer(ModelSerializer):
   class Meta:
     model = Apply
+    fields = "__all__"
+    
+class ProductSerializer(ModelSerializer):
+  class Meta:
+    model = Product
     fields = "__all__"
     
 class UserSerializer(serializers.ModelSerializer):

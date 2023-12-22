@@ -1,18 +1,71 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import { NavLink, useParams } from 'react-router-dom';
-import ProductData from '../../data/ProductData';
+// import ProductData from '../../data/ProductData';
+import { BaseUrlContext } from '../../App';
+import axios from 'axios';
 
 const SubCategory = () => {
     const { category } = useParams();
-    const data = ProductData.filter(item => item.category === category)
+    // const data = ProductData.filter(item => item.category === category)
+
+    const [banner, setBanner] = useState();
+
+    const [productData, setProductData] = useState([]);
+    const baseUrl = React.useContext(BaseUrlContext);
+
+    const FetchProduct = async () => {
+        try {
+            const response = await axios.get(
+                `${baseUrl}/product/`
+            );
+            // Filter the response data by status and page_type
+
+
+            if (response.data) {
+                const ProductDatas = response.data.filter(
+                    (item) => item.status === "Publish" && item.page_type === "Product Details"
+                );
+                setProductData(ProductDatas.filter(item => item.category === category)); // Assuming you want to slice the filtered data
+            }
+
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    const ProductData = async () => {
+        try {
+            const response = await axios.get(
+                `${baseUrl}/navigations/`
+            );
+            // Filter the response data by status and page_type
+            if (response.data) {
+                const bannerData = response.data.find(
+                    (item) => item.status === "Publish" && item.page_type === "Product/slider"
+                );
+                setBanner(bannerData); // Assuming you want to slice the filtered data
+            }  
+
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+
+    useEffect(() => {
+        // Axios GET request to fetch data
+        ProductData();
+        FetchProduct();
+    }, []);
+
 
     const groupedData = {};
 
-    data.forEach((dataItem) => {
-        if (!groupedData[dataItem.subCategory]) {
-            groupedData[dataItem.subCategory] = {
-                subCategory: dataItem.subCategory,
-                thumbnailImage: dataItem.imageUrl,
+    productData.forEach((dataItem) => {
+        if (!groupedData[dataItem.sub_category]) {
+            groupedData[dataItem.sub_category] = {
+                subCategory: dataItem.sub_category,
+                thumbnailImage: dataItem.productimage,
                 products: [dataItem],
             };
         } else {
@@ -21,7 +74,8 @@ const SubCategory = () => {
     });
     return (
         <>
-            <section className={`bg-no-repeat bg-cover md:h-[300px] h-[150px] relative bg-[url('/src/assets/images/background.webp')]`}>
+        <section className={`md:h-[300px] h-[150px] relative`} 
+            style={{backgroundImage: `url(${banner && banner.bannerimage})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
                 <div className="absolute w-full h-full inset-0 bg-black opacity-80"></div>
                 <div className="container relative z-10 text-white flex items-center justify-center h-full">
                     <ul className='flex items-center gap-1 md:text-lg font-medium'>
