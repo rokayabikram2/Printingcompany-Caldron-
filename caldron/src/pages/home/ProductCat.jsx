@@ -5,8 +5,8 @@ import { BaseUrlContext } from '../../App';
 
 const ProductCat = () => {
 
-    const [productData, setProductData] = useState([]);
     const baseUrl = React.useContext(BaseUrlContext);
+    const [productData, setProductData] = useState([]);
 
     const FetchProduct = async () => {
         try {
@@ -48,7 +48,7 @@ const ProductCat = () => {
     });
 
     return (
-        <section className='md:py-20 py-16 bg-color4'>
+        <section className='md:py-20 py-16 bg-color4' id='products'>
             <div className="container flex flex-col md:items-start items-center gap-4">
                 <h2 className="md:text-2xl text-xl font-semibold relative after:absolute after:w-full after:h-[3px] after:content-[''] after:bg-color1 after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:rounded before:absolute before:h-[3px] before:w-[3px] before:content-[''] 
                 before:bg-white before:bottom-0 before:z-10 before:animate-slow-motion">Product Category</h2>

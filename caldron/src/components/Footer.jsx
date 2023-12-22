@@ -76,19 +76,24 @@ useEffect(() => {
             <h3 className="md:text-xl text-lg font-semibold relative after:absolute after:w-full after:h-[3px] after:content-[''] after:bg-color1 after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:rounded before:absolute before:h-[3px] before:w-[3px] before:content-[''] before:bg-white before:bottom-0 before:z-10 before:animate-slow-motion">Quick Links</h3>
             <ul className='lg:text-base text-sm'>
               {navigation[navigation?.findIndex(item => item?.id === 46)] && (
-              <li><NavLink to="/AboutUs" className="flex items-center gap-1 hover:gap-2 transition-all duration-200 ease-linear"><i className="fa-solid fa-arrow-right text-sm text-color2"></i>{navigation[navigation?.findIndex(item => item?.id === 46)]?.name}</NavLink></li>
-
+                <li><NavLink to="/AboutUs" className="flex items-center gap-1 hover:gap-2 transition-all duration-200 ease-linear"><i className="fa-solid fa-arrow-right text-sm text-color2"></i>{navigation[navigation?.findIndex(item => item?.id === 46)]?.name}</NavLink></li>
+                
+                
+                )}
+              {navigation[navigation?.findIndex(item => item?.id === 76)] && (
+                <li><a href="#products" className="flex items-center gap-1 hover:gap-2 transition-all duration-200 ease-linear"><i className="fa-solid fa-arrow-right text-sm text-color2"></i>{navigation[navigation?.findIndex(item => item?.id === 76)]?.name}</a></li>
 
               )}
+              
               {navigation[navigation?.findIndex(item => item?.id === 54)] &&(
-              <li><NavLink to="/ImageGallery" className="flex items-center gap-1 hover:gap-2 transition-all duration-200 ease-linear"><i className="fa-solid fa-arrow-right text-sm text-color2"></i>{navigation[navigation?.findIndex(item => item?.id === 54)]?.name}</NavLink></li>
-
-
-              )}
+                <li><NavLink to="/ImageGallery" className="flex items-center gap-1 hover:gap-2 transition-all duration-200 ease-linear"><i className="fa-solid fa-arrow-right text-sm text-color2"></i>{navigation[navigation?.findIndex(item => item?.id === 54)]?.name}</NavLink></li>
+                
+                
+                )}
               {navigation[navigation?.findIndex(item => item?.id === 45)] &&(
-              <li><NavLink to="/ContactUs" className="flex items-center gap-1 hover:gap-2 transition-all duration-200 ease-linear"><i className="fa-solid fa-arrow-right text-sm text-color2"></i>{navigation[navigation?.findIndex(item => item?.id === 45)]?.name}</NavLink></li>
-
-
+                <li><NavLink to="/ContactUs" className="flex items-center gap-1 hover:gap-2 transition-all duration-200 ease-linear"><i className="fa-solid fa-arrow-right text-sm text-color2"></i>{navigation[navigation?.findIndex(item => item?.id === 45)]?.name}</NavLink></li>
+                
+                
               )}
 
 

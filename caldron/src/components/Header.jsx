@@ -19,7 +19,27 @@ const Header = () => {
 
     const [navigation, setNavigation] = useState([]);
     const baseUrl = React.useContext(BaseUrlContext);
+    const [productData, setProductData] = useState([]);
 
+    const FetchProduct = async () => {
+        try {
+            const response = await axios.get(
+                `${baseUrl}/product/`
+            );
+            // Filter the response data by status and page_type
+
+
+            if (response.data) {
+                const ProductDatas = response.data.filter(
+                    (item) => item.status === "Publish" && item.page_type === "Product Details"
+                );
+                setProductData(ProductDatas); // Assuming you want to slice the filtered data
+            }
+
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
 
     const headerData = async () => {
         try {
@@ -56,6 +76,8 @@ const Header = () => {
     useEffect(() => {
         // Axios GET request to fetch data
         headerData();
+        FetchProduct();
+
     }, [parentId]);
   
 
@@ -125,24 +147,24 @@ const Header = () => {
 
     const groupedData = {};
 
-    ProductData.forEach((dataItem) => {
+    productData.forEach((dataItem) => {
         if (!groupedData[dataItem.category]) {
             groupedData[dataItem.category] = {
                 category: dataItem.category,
-                thumbnailImage: dataItem.imageUrl,
+                thumbnailImage: dataItem.productimage,
                 subcategories: {},
             };
         }
         // Group by subcategory within the category
         const categoryGroup = groupedData[dataItem.category];
-        if (!categoryGroup.subcategories[dataItem.subCategory]) {
-            categoryGroup.subcategories[dataItem.subCategory] = {
-                subCategory: dataItem.subCategory,
-                thumbnailImage: dataItem.imageUrl,
+        if (!categoryGroup.subcategories[dataItem.sub_category]) {
+            categoryGroup.subcategories[dataItem.sub_category] = {
+                subCategory: dataItem.sub_category,
+                thumbnailImage: dataItem.productimage,
                 products: [dataItem],
             };
         } else {
-            categoryGroup.subcategories[dataItem.subCategory].products.push(dataItem);
+            categoryGroup.subcategories[dataItem.sub_category].products.push(dataItem);
         }
     });
 
@@ -165,72 +187,81 @@ const Header = () => {
                             className={`${activeBlock === 0 ? 'after:w-full after:left-0' : 'after:w-0 after:left-1/2'} relative lg:w-auto w-full lg:after:absolute after:content-[''] after:bottom-0 after:h-[2px] after:bg-color2 after:transition-all after:duration-200 after:ease-linear hover:after:w-full hover:after:left-0`}>
                             <NavLink onClick={() => handleNav(false)} to="/" className="inline-block w-full">Home</NavLink>
                         </li>
-                        <li onClick={() => handleButtonClick(1)}
-                            onMouseEnter={() => { if (window.innerWidth > 1024) { handleCategoryHover('Products', true) } }}
-                            onMouseLeave={() => { if (window.innerWidth > 1024) { handleCategoryHover('Products', false) } }}
-                            className={`${activeBlock === 1 ? 'after:w-full after:left-0' : 'after:w-0 after:left-1/2'} relative lg:py-3 lg:w-auto w-full lg:after:absolute after:content-[''] after:bottom-[12px] after:h-[2px] after:bg-color2 after:transition-all after:duration-200 after:ease-linear hover:after:w-full hover:after:left-0`}>
-                            <button onClick={() => { handleCategoryHover('Products', categoryMenus['Products'] ? false : true), setGalleryMenu(false) }} className='w-full h-full flex justify-between items-center relative'>
-                                Products
-                                <i className={`fa-solid fa-chevron-down before:lg:hidden ${categoryMenus['Products'] ? 'rotate-180' : ''} transition-all duration-200 ease-linear`}></i>
-                            </button>
-                            <div className={`lg:bg-white lg:text-black text-gray-400 ${categoryMenus['Products'] ? 'block' : 'hidden'} lg:absolute lg:top-[48px] lg:left-[-140px] lg:border lg:mt-0 mt-2`}>
-                                <div className="flex flex-col lg:w-[160px] w-full h-full">
-                                    {Object.values(groupedData).map((categoryItem, categoryIndex) => (
-                                        <div key={categoryIndex}>
-                                            <NavLink
-                                                className="p-2 lg:border-b lg:hover:text-color1 inline-block w-full relative"
-                                                to={`/ProductCat/${categoryItem.category}`}
-                                                onMouseEnter={() => { if (window.innerWidth > 1024) { handleCategoryHover(categoryItem.category, true) } }}
-                                                onMouseLeave={() => { if (window.innerWidth > 1024) { handleCategoryHover(categoryItem.category, false) } }}
-                                                onClick={() => { if (window.innerWidth > 1024) { setCategoryMenus({}) } }}
-                                            >
-                                                <button
-                                                    onClick={() => handleCategoryHover(categoryItem.category, categoryMenus[categoryItem.category] ? false : true)}
-                                                    className='relative w-full flex justify-between items-center'>
-                                                    {categoryItem.category}
-                                                    <span className='w-[20px] h-[20px] border flex justify-center items-center rounded-full lg:hidden'>
-                                                        <i className={`fa-solid fa-plus lg:before:hidden text-xs ${categoryMenus[categoryItem.category] ? 'before:hidden' : 'before:block'}`}></i>
-                                                        <i className={`fa-solid fa-minus lg:before:hidden text-xs ${categoryMenus[categoryItem.category] ? 'before:block' : 'before:hidden'}`}></i>
-                                                    </span>
-                                                </button>
-                                                {Object.values(categoryItem.subcategories).length > 0 && (
-                                                    <div className={`lg:bg-white bg-black lg:text-black text-gray-500 ${categoryMenus[categoryItem.category] ? 'block' : 'hidden'} lg:absolute lg:top-[10px] lg:left-[160px] lg:border lg:mt-0 mt-2`}>
-                                                        <div className="flex flex-col lg:w-[160px] w-full h-full">
-                                                            {Object.values(categoryItem.subcategories).map((subCategoryItem, subCategoryIndex) => (
-                                                                <NavLink key={subCategoryIndex} className="p-2 lg:border-b lg:hover:text-color1 inline-block w-full relative text-sm" to={`/ProductCat/${categoryItem.category}/${subCategoryItem.subCategory}`}
-                                                                    onMouseEnter={() => { if (window.innerWidth > 1024) { handleSubcategoryHover(subCategoryItem.subCategory, true) } }}
-                                                                    onMouseLeave={() => { if (window.innerWidth > 1024) { handleSubcategoryHover(subCategoryItem.subCategory, false) } }}
-                                                                >
-                                                                    <button
-                                                                        onClick={() => handleSubcategoryHover(subCategoryItem.subCategory, subcategoryMenus[subCategoryItem.subCategory] ? false : true)}
-                                                                        className='relative w-full flex justify-between items-center'>
-                                                                        {subCategoryItem.subCategory}
-                                                                        <i className={`fa-solid fa-arrow-down lg:before:hidden text-xs ${subcategoryMenus[subCategoryItem.subCategory] ? 'rotate-180' : ''} transition-all duration-200 ease-linear`}></i>
-                                                                    </button>
-                                                                    {subCategoryItem.products.length > 0 && (
-                                                                        <div className={`lg:bg-white lg:text-black text-gray-400 ${subcategoryMenus[subCategoryItem.subCategory] ? 'block' : 'hidden'} lg:absolute lg:top-[10px] lg:left-[160px] lg:border lg:mt-0 mt-2`}>
-                                                                            <div className="flex flex-col lg:w-[160px] w-full h-full">
-                                                                                {subCategoryItem.products.map((productItem, productIndex) => {
-                                                                                    const encodePath = encodeURIComponent(productItem.product)
-                                                                                    return (<NavLink onClick={() => { setCategoryMenus({}); setSubcategoryMenus({}); handleNav(false) }} key={productIndex} className="p-2 lg:border-b lg:hover:text-color1 inline-block w-full relative text-xs" to={`/ProductCat/${categoryItem.category}/${subCategoryItem.subCategory}/${encodePath}`}>
-                                                                                        {productItem.product}
-                                                                                    </NavLink>
-                                                                                    )
-                                                                                })}
-                                                                            </div>
-                                                                        </div>
-                                                                    )}
-                                                                </NavLink>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </NavLink>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </li>
+                        {navigation.map((nav) =>(
+                            <React.Fragment key={nav.id}>
+                                {nav.id ===76 &&(
+                                     <li onClick={() => handleButtonClick(1)}
+                                     onMouseEnter={() => { if (window.innerWidth > 1024) { handleCategoryHover('Products', true) } }}
+                                     onMouseLeave={() => { if (window.innerWidth > 1024) { handleCategoryHover('Products', false) } }}
+                                     className={`${activeBlock === 1 ? 'after:w-full after:left-0' : 'after:w-0 after:left-1/2'} relative lg:py-3 lg:w-auto w-full lg:after:absolute after:content-[''] after:bottom-[12px] after:h-[2px] after:bg-color2 after:transition-all after:duration-200 after:ease-linear hover:after:w-full hover:after:left-0`}>
+                                     <button onClick={() => { handleCategoryHover('Products', categoryMenus['Products'] ? false : true), setGalleryMenu(false) }} className='w-full h-full flex justify-between items-center relative'>
+                                         Products
+                                         <i className={`fa-solid fa-chevron-down before:lg:hidden ${categoryMenus['Products'] ? 'rotate-180' : ''} transition-all duration-200 ease-linear`}></i>
+                                     </button>
+                                     <div className={`lg:bg-white lg:text-black text-gray-400 ${categoryMenus['Products'] ? 'block' : 'hidden'} lg:absolute lg:top-[48px] lg:left-[-140px] lg:border lg:mt-0 mt-2`}>
+                                         <div className="flex flex-col lg:w-[160px] w-full h-full">
+                                             {Object.values(groupedData).map((categoryItem, categoryIndex) => (
+                                                 <div key={categoryIndex}>
+                                                     <NavLink
+                                                         className="p-2 lg:border-b lg:hover:text-color1 inline-block w-full relative"
+                                                         to={`/ProductCat/${categoryItem.category}`}
+                                                         onMouseEnter={() => { if (window.innerWidth > 1024) { handleCategoryHover(categoryItem.category, true) } }}
+                                                         onMouseLeave={() => { if (window.innerWidth > 1024) { handleCategoryHover(categoryItem.category, false) } }}
+                                                         onClick={() => { if (window.innerWidth > 1024) { setCategoryMenus({}) } }}
+                                                     >
+                                                         <button
+                                                             onClick={() => handleCategoryHover(categoryItem.category, categoryMenus[categoryItem.category] ? false : true)}
+                                                             className='relative w-full flex justify-between items-center'>
+                                                             {categoryItem.category}
+                                                             <span className='w-[20px] h-[20px] border flex justify-center items-center rounded-full lg:hidden'>
+                                                                 <i className={`fa-solid fa-plus lg:before:hidden text-xs ${categoryMenus[categoryItem.category] ? 'before:hidden' : 'before:block'}`}></i>
+                                                                 <i className={`fa-solid fa-minus lg:before:hidden text-xs ${categoryMenus[categoryItem.category] ? 'before:block' : 'before:hidden'}`}></i>
+                                                             </span>
+                                                         </button>
+                                                         {Object.values(categoryItem.subcategories).length > 0 && (
+                                                             <div className={`lg:bg-white bg-black lg:text-black text-gray-500 ${categoryMenus[categoryItem.category] ? 'block' : 'hidden'} lg:absolute lg:top-[10px] lg:left-[160px] lg:border lg:mt-0 mt-2`}>
+                                                                 <div className="flex flex-col lg:w-[160px] w-full h-full">
+                                                                     {Object.values(categoryItem.subcategories).map((subCategoryItem, subCategoryIndex) => (
+                                                                         <NavLink key={subCategoryIndex} className="p-2 lg:border-b lg:hover:text-color1 inline-block w-full relative text-sm" to={`/ProductCat/${categoryItem.category}/${subCategoryItem.subCategory}`}
+                                                                             onMouseEnter={() => { if (window.innerWidth > 1024) { handleSubcategoryHover(subCategoryItem.subCategory, true) } }}
+                                                                             onMouseLeave={() => { if (window.innerWidth > 1024) { handleSubcategoryHover(subCategoryItem.subCategory, false) } }}
+                                                                         >
+                                                                             <button
+                                                                                 onClick={() => handleSubcategoryHover(subCategoryItem.subCategory, subcategoryMenus[subCategoryItem.subCategory] ? false : true)}
+                                                                                 className='relative w-full flex justify-between items-center'>
+                                                                                 {subCategoryItem.subCategory}
+                                                                                 <i className={`fa-solid fa-arrow-down lg:before:hidden text-xs ${subcategoryMenus[subCategoryItem.subCategory] ? 'rotate-180' : ''} transition-all duration-200 ease-linear`}></i>
+                                                                             </button>
+                                                                             {subCategoryItem.products.length > 0 && (
+                                                                                 <div className={`lg:bg-white lg:text-black text-gray-400 ${subcategoryMenus[subCategoryItem.subCategory] ? 'block' : 'hidden'} lg:absolute lg:top-[10px] lg:left-[160px] lg:border lg:mt-0 mt-2`}>
+                                                                                     <div className="flex flex-col lg:w-[160px] w-full h-full">
+                                                                                         {subCategoryItem.products.map((productItem, productIndex) => {
+                                                                                             const encodePath = encodeURIComponent(productItem.name)
+                                                                                             return (<NavLink onClick={() => { setCategoryMenus({}); setSubcategoryMenus({}); handleNav(false) }} key={productIndex} className="p-2 lg:border-b lg:hover:text-color1 inline-block w-full relative text-xs" to={`/ProductCat/${categoryItem.category}/${subCategoryItem.subCategory}/${encodePath}`}>
+                                                                                                 {productItem.name}
+                                                                                             </NavLink>
+                                                                                             )
+                                                                                         })}
+                                                                                     </div>
+                                                                                 </div>
+                                                                             )}
+                                                                         </NavLink>
+                                                                     ))}
+                                                                 </div>
+                                                             </div>
+                                                         )}
+                                                     </NavLink>
+                                                 </div>
+                                             ))}
+                                         </div>
+                                     </div>
+                                 </li>
+                                )}
+                            </React.Fragment>
+                             
+                        ))}
+
+                       
 
                         {navigation.map((nav) =>(
                             <React.Fragment key={nav.id}>

@@ -66,7 +66,7 @@ const ProductDetail = () => {
         // Axios GET request to fetch data
         ProductData();
         FetchProduct();
-    }, []);
+    }, [category, subCategory, name]);
     console.log(productData)
   return (
     <>

@@ -1,11 +1,32 @@
 import React, { useState,useEffect } from 'react'
-import ProductData from '../../data/ProductData';
 import axios from 'axios';
 import { BaseUrlContext } from '../../App';
 
 const OrderForm = () => {
     const [order, setOrder] = useState({});
     const baseUrl = React.useContext(BaseUrlContext);
+
+    const [productData, setProductData] = useState([]);
+
+    const FetchProduct = async () => {
+        try {
+            const response = await axios.get(
+                `${baseUrl}/product/`
+            );
+            // Filter the response data by status and page_type
+
+
+            if (response.data) {
+                const ProductDatas = response.data.filter(
+                    (item) => item.status === "Publish" && item.page_type === "Product Details"
+                );
+                setProductData(ProductDatas); // Assuming you want to slice the filtered data
+            }
+
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
 
     const orderData = async () => {
         try {
@@ -25,14 +46,15 @@ const OrderForm = () => {
 
     useEffect(() => {
         orderData();
+        FetchProduct();
     }, []);
     const groupedData = {};
 
-    ProductData.forEach((dataItem) => {
+    productData.forEach((dataItem) => {
         if (!groupedData[dataItem.category]) {
             groupedData[dataItem.category] = {
                 category: dataItem.category,
-                thumbnailImage: dataItem.imageUrl,
+                thumbnailImage: dataItem.productimage,
                 products: [dataItem],
             };
         } else {
@@ -53,12 +75,6 @@ const OrderForm = () => {
         setForm((prevData) =>({ ...prevData, [name]: value }));
     }
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     alert('Form submitted successfully!')
-    //     console.log(form)
-    //     setForm(initialForm)
-    // }
     const handleSubmit = async (event) => {
         event.preventDefault();
     

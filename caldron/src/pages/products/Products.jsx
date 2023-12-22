@@ -54,7 +54,7 @@ const Products = () => {
         // Axios GET request to fetch data
         ProductData();
         FetchProduct();
-    }, []);
+    }, [category, subCategory]);
 
   return (
     <>

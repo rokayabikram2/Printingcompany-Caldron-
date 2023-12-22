@@ -124,8 +124,10 @@
                       <tr>
                         <th>S/N</th>
                         <th>Name</th>
-                        <th>Banner Image</th>
+                        <th>Product Image</th>
                         <th>Page Type</th>
+                        <th>Category</th>
+                        <th>Sub-category</th>
                         <th>Status</th>
                         <th>Actions</th>
                         <th>Open</th>
@@ -137,11 +139,13 @@
                           <th>{{ forloop.counter }}</th>
                           <td>{{ objs.name }}</td>
                           <td>
-                            {% if objs.bannerimage %}
-                              <img src="{{ objs.bannerimage.url }}" style="max-width: 30%; height: auto">
+                            {% if objs.productimage %}
+                              <img src="{{ objs.productimage.url }}" style="max-width: 30%; height: auto">
                             {% endif %}
                           </td>
                           <td>{{ objs.page_type }}</td>
+                          <td>{{objs.category}}</td>
+                          <td>{{objs.sub_category}}
                           <td>{{ objs.status }}</td>
                           <style>
                           .button-group {
@@ -198,4 +202,6 @@
       }
       
     </script>
+
+
   {% endblock content %}

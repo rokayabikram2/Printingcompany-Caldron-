@@ -56,7 +56,7 @@ const SubCategory = () => {
         // Axios GET request to fetch data
         ProductData();
         FetchProduct();
-    }, []);
+    }, [category]);
 
 
     const groupedData = {};
@@ -69,7 +69,7 @@ const SubCategory = () => {
                 products: [dataItem],
             };
         } else {
-            groupedData[dataItem.subCategory].products.push(dataItem);
+            groupedData[dataItem.sub_category].products.push(dataItem);
         }
     });
     return (
