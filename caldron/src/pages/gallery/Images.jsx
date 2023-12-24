@@ -63,7 +63,7 @@ const Images = () => {
                      before:h-[3px] before:w-[3px] before:content-[''] before:bg-color1 before:bottom-0 before:z-10 before:animate-slow-motion">{title}</h2>
                     <div className='grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-5 w-full'>
                         {imagegall.map((dataItem, index) => (
-                            <ImageModal key={dataItem.id} index={index} imageUrl={dataItem.bannerimage} images={title} />
+                            <ImageModal key={dataItem.id} index={index} imageUrl={dataItem.bannerimage} images={imagegall} />
                         ))} 
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useEffect,  } from 'react';
+import React,  from 'react';
 import './App.css';
 import Footer from './components/Footer';
 import Header from './components/Header';
@@ -31,7 +31,7 @@ function App() {
   // Construct the base URL for the API
   // const baseUrl = `${scheme}//${host}/api`;
 
-  const baseUrl = `http://127.0.0.1:8000/api`
+  const baseUrl = `http://127.0.0.1:8000/api`;
 
   return (
     <> 

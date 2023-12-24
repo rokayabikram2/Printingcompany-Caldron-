@@ -81,7 +81,7 @@ useEffect(() => {
                 
                 )}
               {navigation[navigation?.findIndex(item => item?.id === 76)] && (
-                <li><a href="#products" className="flex items-center gap-1 hover:gap-2 transition-all duration-200 ease-linear"><i className="fa-solid fa-arrow-right text-sm text-color2"></i>{navigation[navigation?.findIndex(item => item?.id === 76)]?.name}</a></li>
+                <li><a href="/#products" className="flex items-center gap-1 hover:gap-2 transition-all duration-200 ease-linear"><i className="fa-solid fa-arrow-right text-sm text-color2"></i>{navigation[navigation?.findIndex(item => item?.id === 76)]?.name}</a></li>
 
               )}
               

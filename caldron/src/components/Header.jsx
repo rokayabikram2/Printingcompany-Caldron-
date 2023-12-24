@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import ProductData from '../data/ProductData';
 import axios from 'axios';
 import { BaseUrlContext } from '../App';
 
